@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+    drupal-server:
+        build: ./docker/ubuntu.18.04
+        container_name: drupal-server
+        networks:
+            drupal:
+                ipv4_address: 172.1.0.3
+        links:
+        - mysql
+        volumes:
+        - ./www:/var/www/html
+        - ./docker/logs/apache2:/var/log/apache2
+        - ./docker/ubuntu.18.04/vhost.conf:/etc/apache2/sites-available/vhost.conf
+        restart: always
+
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: drupal
+            MYSQL_PASSWORD: drupal
+            MYSQL_DATABASE: drupal
+        networks:
+        - drupal
+        volumes:
+        - ./docker/database:/var/lib/mysql
+        restart: always
+
+    phpmyadmin:
+        image: "phpmyadmin/phpmyadmin"
+        container_name: drupal-phpmyadmin
+        ports: 
+        - "9090:80"
+        links:
+        - mysql:mysql
+        networks:
+        - drupal
+        environment:
+          PMA_HOST: "mysql"
+          PMA_PORT: 3306
+    
+
+networks:
+  drupal:
+    ipam:
+      config:
+        - subnet: 172.1.0.0/16
