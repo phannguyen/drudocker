@@ -1,9 +1,9 @@
 version: '2'
 
 services:
-    drupal-server:
+    dru-server:
         build: ./docker/ubuntu.18.04
-        container_name: drupal-server
+        container_name: dru-server
         networks:
             drupal:
                 ipv4_address: 172.1.0.3
@@ -30,7 +30,7 @@ services:
 
     phpmyadmin:
         image: "phpmyadmin/phpmyadmin"
-        container_name: drupal-phpmyadmin
+        container_name: dru-phpmyadmin
         ports: 
         - "9090:80"
         links:

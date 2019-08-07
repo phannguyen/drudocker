@@ -1,1 +1,3 @@
 www/*
+docker/logs/*
+docker/database/*
