@@ -4,11 +4,12 @@ services:
     dru-server:
         build: ./docker/app/ubuntu
         container_name: dru-server
-        networks:
-          dru_network:
-            ipv4_address: 172.100.0.3
+        ports: 
+          - 80:80
+          - 443:443
         links:
           - mysql
+          - mailhog
         volumes:
           - ./www:/var/www/html
           - ./docker/logs/apache2:/var/log/apache2
@@ -21,9 +22,8 @@ services:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: drupal
           MYSQL_PASSWORD: drupal
-        networks:
-          dru_network:
-            ipv4_address: 172.100.0.2  
+        ports: 
+          - 3306:3306
         volumes:
           - ./docker/data/mysql:/var/lib/mysql
         restart: always
@@ -38,6 +38,12 @@ services:
         environment:
           PMA_HOST: "mysql"
           PMA_PORT: 3306
+    mailhog: 
+        image: mailhog/mailhog
+        container_name: dru-mailhog
+        ports: 
+          - 1025:1025
+          - 8025:8025
 networks:
   dru_network:
     ipam:
