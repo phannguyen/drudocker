@@ -53,7 +53,7 @@ RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/servername.con
 RUN a2enconf servername
 
 # Configure vhost 
-COPY ssl/ /etc/apache2/ssl/
+#COPY ssl/ /etc/apache2/ssl/
 COPY vhost.conf /etc/apache2/sites-available/
 RUN a2dissite 000-default
 RUN a2ensite vhost.conf
