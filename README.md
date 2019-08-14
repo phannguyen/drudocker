@@ -6,3 +6,9 @@ Dev environment for Drupal
   - Add/update in file ubuntu.18.04/vhost.conf
   - Update file hosts (/etc/hosts)
     ex: 172.1.0.3 example.mydomain
+    
+3. phpMyAdmin
+
+http://localhost:9090/
+username: root
+password: root

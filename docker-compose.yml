@@ -13,6 +13,7 @@ services:
         volumes:
           - ./www:/var/www/html
           - ./docker/logs/apache2:/var/log/apache2
+          - ./docker/app/ubuntu/vhost.conf:/etc/apache2/sites-available/vhost.conf
         restart: always
 
     mysql:
@@ -44,8 +45,3 @@ services:
         ports: 
           - 1025:1025
           - 8025:8025
-networks:
-  dru_network:
-    ipam:
-      config:
-        - subnet: 172.100.0.0/16
