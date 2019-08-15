@@ -13,7 +13,7 @@ services:
         volumes:
           - ./www:/var/www/html
           - ./docker/logs/apache2:/var/log/apache2
-          - ./docker/app/ubuntu/vhost.conf:/etc/apache2/sites-available/vhost.conf
+          - ./docker/app/ubuntu/apache2/sites-available:/etc/apache2/sites-available
         restart: always
 
     mysql:
