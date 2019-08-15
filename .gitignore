@@ -1,3 +1,5 @@
 www/*
 docker/logs/*
 docker/data/*
+docker/app/ubuntu/apache2/sites-available/*.conf
+

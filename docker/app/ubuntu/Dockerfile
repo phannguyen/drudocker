@@ -54,9 +54,9 @@ RUN a2enconf servername
 
 # Configure vhost 
 #COPY ssl/ /etc/apache2/ssl/
-COPY vhost.conf /etc/apache2/sites-available/
-RUN a2dissite 000-default
-RUN a2ensite vhost.conf
+COPY vhost.conf /etc/apache2/sites-enabled/vhost.conf
+#RUN a2dissite 000-default
+#RUN a2ensite vhost.conf
 
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash
@@ -68,6 +68,5 @@ EXPOSE 80 443
 
 WORKDIR /var/www/html
 
-RUN rm index.html
 
 CMD apachectl -D FOREGROUND
