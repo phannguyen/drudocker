@@ -9,8 +9,8 @@ Dev environment for Drupal
   - Create vhost in  docker/app/ubuntu/apache2/sites-available  (refer file: sample.conf.example)
   - Update file hosts (/etc/hosts)
   - Ex: 
-      docker/app/ubuntu/apache2/sites-available/example.mydomain.conf
-      127.0.0.1 example.mydomain
+      - docker/app/ubuntu/apache2/sites-available/example.mydomain.conf
+      - 127.0.0.1 example.mydomain
     
 ## 3. phpMyAdmin
 - http://localhost:9090/
@@ -19,6 +19,7 @@ Dev environment for Drupal
 
 ## 4. Mailhog
 - Webmail: http://localhost:8025
-- SMTP: + host: mailhog
-        + user: null        
-        + password: null
+- SMTP:
+   - Host: mailhog
+   - User: null        
+   - Password: null
