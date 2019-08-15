@@ -11,6 +11,7 @@ Dev environment for Drupal
   - Ex: 
       - docker/app/ubuntu/apache2/sites-available/example.mydomain.conf
       - 127.0.0.1 example.mydomain
+  - Run command: docker exec -it dru-server service apache2 restart
     
 ## 3. phpMyAdmin
 - http://localhost:9090/
