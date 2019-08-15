@@ -1,5 +1,5 @@
 www/*
 docker/logs/*
 docker/data/*
-docker/app/ubuntu/*.conf
+docker/app/ubuntu/vhost.conf
 
