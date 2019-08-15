@@ -22,6 +22,6 @@ Dev environment for Drupal
 - Webmail: http://localhost:8025
 - SMTP:
    - Host: mailhog
-   - P
+   - Port: 1025
    - User: null        
    - Password: null
