@@ -47,15 +47,14 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8 de_DE.UTF-8 es_ES.UTF-8 fr_FR.UTF-8 it_IT
 COPY drupal.ini /etc/php/7.2/mods-available/
 RUN phpenmod drupal
 
-# Configure apache 
-RUN a2enmod rewrite expires ssl
+# Configure apache
+RUN a2enmod rewrite
 RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/servername.conf
 RUN a2enconf servername
 
-# Configure vhost 
-#COPY ssl/ /etc/apache2/ssl/
 COPY vhost.conf /etc/apache2/sites-enabled/vhost.conf
-#RUN a2dissite 000-default
+RUN a2dissite 000-default
+COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 #RUN a2ensite vhost.conf
 
 # Install Node.js
