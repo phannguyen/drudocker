@@ -45,3 +45,11 @@ services:
         ports: 
           - 1025:1025
           - 8025:8025
+    solr:
+        image: solr:5.5
+        container_name: dru-solr
+        ports:
+          - 8983:8983
+        volumes:
+          - ./docker/data/solr:/opt/solr/server/solr/mycores
+      
