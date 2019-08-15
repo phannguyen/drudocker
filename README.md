@@ -10,7 +10,6 @@ Dev environment for Drupal
   - Update file hosts (/etc/hosts)
   - Ex: 
       docker/app/ubuntu/apache2/sites-available/example.mydomain.conf
-      
       127.0.0.1 example.mydomain
     
 ## 3. phpMyAdmin
@@ -21,7 +20,5 @@ Dev environment for Drupal
 ## 4. Mailhog
 - Webmail: http://localhost:8025
 - SMTP: + host: mailhog
-
-        + user: null
-        
+        + user: null        
         + password: null
