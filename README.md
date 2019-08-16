@@ -32,7 +32,7 @@ Dev environment for Drupal
    - Host: solr
    - Port: 8983
 
-## 6. MySQL
+## 6. MySql
 - Port: 3306
 - Host: mysql
 - Root password: root
