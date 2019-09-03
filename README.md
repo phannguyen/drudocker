@@ -25,3 +25,15 @@ Dev environment for Drupal
    - Port: 1025
    - User: null        
    - Password: null
+   
+## 5. Solr
+- Webmail: http://localhost:8983
+- Setting:
+   - Host: solr
+   - Port: 8983
+
+## 6. MySql
+- Port: 3306
+- Host: mysql
+- Root password: root
+
