@@ -31,3 +31,9 @@ Dev environment for Drupal
 - Setting:
    - Host: solr
    - Port: 8983
+
+## 6. MySql
+- Port: 3306
+- Host: mysql
+- Root password: root
+
