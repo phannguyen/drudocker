@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y software-properties-common && add-apt-r
     mysql-client \
     locales \
     supervisor \
+    wget \
     ## For PHP Developer
     apache2 \
     libapache2-mod-fcgid \
@@ -41,11 +42,23 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set locales
 RUN locale-gen en_US.UTF-8 en_GB.UTF-8 de_DE.UTF-8 es_ES.UTF-8 fr_FR.UTF-8 it_IT.UTF-8 km_KH sv_SE.UTF-8 fi_FI.UTF-8
 
+
+#Install mhmail
+RUN cd /usr/local/bin && wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
+RUN chmod +x /usr/local/bin/mhsendmail_linux_amd64 && mv /usr/local/bin/mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
+COPY mailhog.ini /etc/php/7.0/mods-available/
+COPY mailhog.ini /etc/php/7.1/mods-available/
+COPY mailhog.ini /etc/php/7.2/mods-available/
+COPY mailhog.ini /etc/php/7.3/mods-available/
+RUN phpenmod mailhog
+
 # Update php.ini
-#COPY drupal.ini /etc/php/7.2/mods-available/
-#COPY drupal.ini /etc/php/7.1/mods-available/
+COPY drupal.ini /etc/php/7.3/mods-available/
+COPY drupal.ini /etc/php/7.2/mods-available/
+COPY drupal.ini /etc/php/7.1/mods-available/
 COPY drupal.ini /etc/php/7.0/mods-available/
 RUN phpenmod drupal
+
 
 # Configure apache
 RUN a2enmod actions alias proxy_fcgi fcgid
@@ -64,7 +77,7 @@ RUN apt-get install --yes nodejs
 
 RUN npm install -g gulp
 
-EXPOSE 80 443
+EXPOSE 80
 
 WORKDIR /var/www/html
 
