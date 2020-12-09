@@ -19,9 +19,12 @@ RUN apt-get update && apt-get install -y software-properties-common && add-apt-r
     locales \
     supervisor \
     wget \
+    patch \
     ## For PHP Developer
     apache2 \
     libapache2-mod-fcgid \
+    ### Install php 8.0
+    php8.0 libapache2-mod-php8.0 php8.0-common php8.0-mbstring php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-zip php8.0-curl php8.0-apcu php8.0-fpm \
     ### Install php 7.3
     php7.3 libapache2-mod-php7.3 php7.3-common php7.3-mbstring php7.3-xmlrpc php7.3-soap php7.3-gd php7.3-xml php7.3-intl php7.3-mysql php7.3-cli php7.3-zip php7.3-curl \
     php7.3-fpm \
@@ -50,9 +53,11 @@ COPY mailhog.ini /etc/php/7.0/mods-available/
 COPY mailhog.ini /etc/php/7.1/mods-available/
 COPY mailhog.ini /etc/php/7.2/mods-available/
 COPY mailhog.ini /etc/php/7.3/mods-available/
+COPY mailhog.ini /etc/php/8.0/mods-available/
 RUN phpenmod mailhog
 
 # Update php.ini
+COPY drupal.ini /etc/php/8.0/mods-available/
 COPY drupal.ini /etc/php/7.3/mods-available/
 COPY drupal.ini /etc/php/7.2/mods-available/
 COPY drupal.ini /etc/php/7.1/mods-available/
@@ -72,7 +77,7 @@ COPY 000-default.conf /etc/apache2/sites-enabled/000-default.conf
 #RUN a2ensite vhost.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash
 RUN apt-get install --yes nodejs
 
 RUN npm install -g gulp
