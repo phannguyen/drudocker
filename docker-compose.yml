@@ -8,7 +8,7 @@ services:
           - 80:80
           - 443:443
         links:
-          - mysql
+          - mariadb
           - mailhog
         volumes:
           - ./www:/var/www/html
@@ -16,9 +16,9 @@ services:
           - ./docker/app/ubuntu/apache2/sites-available:/etc/apache2/sites-available
         restart: always
 
-    mysql:
-        build: ./docker/app/mysql
-        container_name: dru-mysql
+    mariadb:
+        build: ./docker/app/mariadb
+        container_name: dru-mariadb
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_USER: drupal
@@ -28,6 +28,7 @@ services:
         volumes:
           - ./docker/data/mysql:/var/lib/mysql
         restart: always
+    
 
     phpmyadmin:
         image: "phpmyadmin/phpmyadmin"
@@ -35,9 +36,9 @@ services:
         ports: 
           - "9090:80"
         links:
-          - mysql
+          - mariadb
         environment:
-          PMA_HOST: "mysql"
+          PMA_HOST: "mariadb"
           PMA_PORT: 3306
     mailhog: 
         image: mailhog/mailhog

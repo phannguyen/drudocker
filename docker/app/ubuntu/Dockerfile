@@ -24,13 +24,16 @@ RUN apt-get update && apt-get install -y software-properties-common && add-apt-r
     apache2 \
     libapache2-mod-fcgid \
     ### Install php 8.0
-    php8.0 libapache2-mod-php8.0 php8.0-common php8.0-mbstring php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-zip php8.0-curl php8.0-apcu php8.0-fpm \
+    #php8.0 libapache2-mod-php8.0 php8.0-common php8.0-mbstring php8.0-soap php8.0-gd php8.0-xml php8.0-intl php8.0-mysql php8.0-cli php8.0-zip php8.0-curl php8.0-apcu php8.0-fpm \
+    ### Install php 7.4
+    php7.4 libapache2-mod-php7.4 php7.4-common php7.4-mbstring php7.4-xmlrpc php7.4-soap php7.4-gd php7.4-xml php7.4-intl php7.4-mysql php7.4-cli php7.4-zip php7.4-curl \
+    php7.4-fpm php7.4-bcmath\
     ### Install php 7.3
     php7.3 libapache2-mod-php7.3 php7.3-common php7.3-mbstring php7.3-xmlrpc php7.3-soap php7.3-gd php7.3-xml php7.3-intl php7.3-mysql php7.3-cli php7.3-zip php7.3-curl \
-    php7.3-fpm \
+    php7.3-fpm php7.3-bcmath\
     ### Install php 7.2
     php7.2 libapache2-mod-php7.2 php7.2-common php7.2-mbstring php7.2-xmlrpc php7.2-soap php7.2-gd php7.2-xml php7.2-intl php7.2-mysql php7.2-cli php7.2-zip php7.2-curl \
-    php7.2-fpm \
+    php7.2-fpm php7.2-bcmath\
     ### Install php 7.1
     php7.1 php7.1-common php7.1-mbstring php7.1-xmlrpc php7.1-soap php7.1-gd php7.1-xml php7.1-intl php7.1-mysql php7.1-cli php7.1-zip php7.1-curl \
     php7.1-fpm \
@@ -53,11 +56,11 @@ COPY mailhog.ini /etc/php/7.0/mods-available/
 COPY mailhog.ini /etc/php/7.1/mods-available/
 COPY mailhog.ini /etc/php/7.2/mods-available/
 COPY mailhog.ini /etc/php/7.3/mods-available/
-COPY mailhog.ini /etc/php/8.0/mods-available/
+COPY mailhog.ini /etc/php/7.4/mods-available/
 RUN phpenmod mailhog
 
 # Update php.ini
-COPY drupal.ini /etc/php/8.0/mods-available/
+COPY drupal.ini /etc/php/7.4/mods-available/
 COPY drupal.ini /etc/php/7.3/mods-available/
 COPY drupal.ini /etc/php/7.2/mods-available/
 COPY drupal.ini /etc/php/7.1/mods-available/
