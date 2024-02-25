@@ -77,6 +77,13 @@ RUN a2enmod rewrite
 RUN echo "ServerName localhost" | tee /etc/apache2/conf-available/servername.conf
 RUN a2enconf servername
 
+# Install SSL-related packages
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt -subj "/C=US/ST=YourState/L=YourCity/O=YourOrganization/OU=YourOrgUnit/CN=dru-server"
+
+# Enable the SSL module in Apache
+RUN a2enmod ssl
+
+
 #Run php7.4 default
 RUN a2dismod php8.1
 RUN a2enmod php7.4
@@ -94,7 +101,7 @@ RUN apt-get install --yes nodejs
 #RUN npm install -g gulp
 RUN npm install -g yarn
 
-EXPOSE 80
+EXPOSE 80 443
 
 WORKDIR /var/www/html
 
