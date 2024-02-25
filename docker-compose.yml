@@ -1,56 +1,115 @@
 version: "3"
 
 services:
-    dru-server:
-        build: ./docker/app/ubuntu
-        container_name: dru-server
-        ports: 
-          - 80:80
-          - 443:443
-        links:
-          - mysql
-          - mailhog
-        volumes:
-          - ./www:/var/www/html
-          - ./docker/logs/apache2:/var/log/apache2
-          - ./docker/app/ubuntu/apache2/sites-available:/etc/apache2/sites-available
-        restart: always
+  traefik:
+    image: traefik:v2.3
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      #- --certificatesresolvers.myresolver.acme.tlschallenge=true
+      #- --certificatesresolvers.myresolver.acme.email=your-email@example.com
+      #- --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - web
 
-    mysql:
-        build: ./docker/app/mysql
-        container_name: dru-mysql
-        environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_USER: drupal
-          MYSQL_PASSWORD: drupal
-        ports: 
-          - 3306:3306
-        volumes:
-          - ./docker/data/mysql:/var/lib/mysql
-        restart: always
-    
+  php7-server:
+    build: ./docker/app/php7-server
+    container_name: dru-server-php7
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php7-server.rule=HostRegexp(`{subdomain:.+}.php7.local`)"
+      - "traefik.http.routers.php7-server.entrypoints=web"
+      - "traefik.http.routers.php7-server-secure.rule=HostRegexp(`{subdomain:.+}.php7.local`)"
+      - "traefik.http.routers.php7-server-secure.entrypoints=websecure"
+      - "traefik.http.routers.php7-server-secure.tls=true"
+      # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
+      # - "traefik.http.routers.php7-server-secure.tls.certresolver=myresolver"
+    links:
+      - mysql
+      - mailhog
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/logs/apache2:/var/log/apache2
+      - ./docker/app/php7-server/apache2/sites-available:/etc/apache2/sites-available
+    networks:
+      - web
 
-    phpmyadmin:
-        image: "phpmyadmin/phpmyadmin"
-        container_name: dru-phpmyadmin
-        ports: 
-          - "9090:80"
-        links:
-          - mysql
-        environment:
-          PMA_HOST: "mysql"
-          PMA_PORT: 3306
-    mailhog: 
-        image: mailhog/mailhog
-        container_name: dru-mailhog
-        ports: 
-          - 1025:1025
-          - 8025:8025
-    # solr:
-    #     image: solr:5.5
-    #     container_name: dru-solr
-    #     ports:
-    #       - 8983:8983
-    #     volumes:
-    #       - ./docker/data/solr:/opt/solr/server/solr/mycores
-      
+  php8-server:
+    build: ./docker/app/php8-server
+    container_name: dru-server-php8
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php8-server.rule=HostRegexp(`{subdomain:.+}.php8.local`)"
+      - "traefik.http.routers.php8-server.entrypoints=web"
+      - "traefik.http.routers.php8-server-secure.rule=HostRegexp(`{subdomain:.+}.php8.local`)"
+      - "traefik.http.routers.php8-server-secure.entrypoints=websecure"
+      - "traefik.http.routers.php8-server-secure.tls=true"
+      # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
+      # - "traefik.http.routers.php8-server-secure.tls.certresolver=myresolver"
+    links:
+      - mysql
+      - mailhog
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/logs/apache2:/var/log/apache2
+      - ./docker/app/php8-server/apache2/sites-available:/etc/apache2/sites-available
+    networks:
+      - web
+
+  mysql:
+    build: ./docker/app/mysql
+    container_name: dru-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/data/mysql:/var/lib/mysql
+    networks:
+      - web
+
+  phpmyadmin:
+    image: "phpmyadmin/phpmyadmin"
+    container_name: dru-phpmyadmin
+    ports:
+      - "9090:80"
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    networks:
+      - web
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: dru-mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - web
+
+# Uncomment the solr service configuration if needed.
+#  solr:
+#     image: solr:5.5
+#     container_name: dru-solr
+#     ports:
+#       - 8983:8983
+#     volumes:
+#       - ./docker/data/solr:/opt/solr/server/solr/mycores
+#     networks:
+#       - web
+
+networks:
+  web:
+    # This network will be created with the default
