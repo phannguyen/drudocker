@@ -2,4 +2,6 @@ www/*
 docker/logs/*
 docker/data/*
 docker/app/ubuntu/apache2/sites-available/*.conf
+docker/app/php7-server/apache2/sites-available/*.conf
+docker/app/php8-server/apache2/sites-available/*.conf
 
