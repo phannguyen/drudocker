@@ -1,5 +1,5 @@
 # docker_server
-Dev environment for Drupal.
+Local development environment for Drupal with multiple PHP versions.
 ## 1. Clone drudocker
    Run:
    - `docker-compose build`
@@ -15,6 +15,7 @@ Confing server php7:
       - docker/app/php7-server/apache2/sites-available/example.mydomain.conf
       - 127.0.0.1 example.php7.local
   - Run command: `docker exec -it dru-server-php7 service apache2 restart`
+
 *Note: The domain must follow the pattern: *.php7.local. If you need to make changes, please refer to the Traefik configuration in the docker-compose file.
 
 Confing server php8:
@@ -49,4 +50,9 @@ Confing server php8:
 - Port: 3306
 - Host: mysql
 - Root password: root
+
+## 7. Enable Xdebug (Manual Installation)
+ - To enable Xdebug for PHP 7.4-FPM
+   run the script `./script/install-xdebug-php74-fpm.sh`
+ - For other versions, you can duplicate the script file and modify it for the respective PHP version installation.
 
