@@ -1,4 +1,4 @@
-# docker_server
+# DruDocker
 Local development environment for Drupal with multiple PHP versions.
 ## 1. Clone drudocker
    Run:
