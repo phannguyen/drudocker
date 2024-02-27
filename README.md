@@ -10,7 +10,7 @@ Local development environment for Drupal with multiple PHP versions.
    - For PHP 8.x: `docker exec -it dru-server-php8 bash`
 
 ## 2. Config vhost:
-Confing server php7:
+- 📫 **For PHP7-Server:**
   - Create vhost in  docker/app/php7-server/apache2/sites-available  (refer file: sample.conf.example)
   - Update file hosts (/etc/hosts)
   - Ex:
@@ -20,7 +20,7 @@ Confing server php7:
 
 👋*****Note**: The domain must follow the pattern: `*.php7.local`. If you need to make changes, please refer to the Traefik configuration in the docker-compose file.
 
-Confing server php8:
+- 📫 **For PHP8-Server:**
   - Create vhost in  docker/app/php8-server/apache2/sites-available  (refer file: sample.conf.example)
   - Update file hosts (/etc/hosts)
   - Ex:
@@ -55,7 +55,9 @@ Confing server php8:
 - Root password: root
 
 ## 7. Enable Xdebug (Manual Installation)
- - To enable Xdebug for PHP 7.4-FPM
-   run the script `./script/install-xdebug-php74-fpm.sh`
+ - To enable Xdebug for PHP 7.4-FPM run the script 
+```
+./script/install-xdebug-php74-fpm.sh
+```
  - For other versions, you can duplicate the script file and modify it for the respective PHP version installation.
 
