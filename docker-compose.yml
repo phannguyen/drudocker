@@ -22,6 +22,8 @@ services:
   php7-server:
     build: ./docker/app/php7-server
     container_name: dru-server-php7
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.php7-server.rule=HostRegexp(`{subdomain:.+}.php7.local`)"
@@ -31,9 +33,9 @@ services:
       - "traefik.http.routers.php7-server-secure.tls=true"
       # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
       # - "traefik.http.routers.php7-server-secure.tls.certresolver=myresolver"
-    links:
-      - mysql
-      - mailhog
+    #links:
+    #  - mysql
+    #  - mailhog
     volumes:
       - ./www:/var/www/html
       - ./docker/logs/apache2:/var/log/apache2
@@ -44,6 +46,8 @@ services:
   php8-server:
     build: ./docker/app/php8-server
     container_name: dru-server-php8
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.php8-server.rule=HostRegexp(`{subdomain:.+}.php8.local`)"
@@ -53,9 +57,9 @@ services:
       - "traefik.http.routers.php8-server-secure.tls=true"
       # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
       # - "traefik.http.routers.php8-server-secure.tls.certresolver=myresolver"
-    links:
-      - mysql
-      - mailhog
+    #links:
+    #  - mysql
+    #  - mailhog
     volumes:
       - ./www:/var/www/html
       - ./docker/logs/apache2:/var/log/apache2
@@ -82,8 +86,8 @@ services:
     container_name: dru-phpmyadmin
     ports:
       - "9090:80"
-    links:
-      - mysql
+    #links:
+    #  - mysql
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
