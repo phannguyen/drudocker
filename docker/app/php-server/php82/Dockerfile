@@ -1,6 +1,3 @@
-#https://www.drupal.org/docs/8/system-requirements/php-requirements
-#https://devanswers.co/run-multiple-php-versions-on-apache/
-
 FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -23,9 +20,9 @@ RUN apt-get update && apt-get install -y software-properties-common && add-apt-r
     ## For PHP Developer
     apache2 \
     libapache2-mod-fcgid \
-    ### Install php 8.1
-    php8.1 libapache2-mod-php8.1 php8.1-common php8.1-mbstring php8.1-xmlrpc php8.1-soap php8.1-gd php8.1-xml php8.1-intl php8.1-mysql php8.1-cli php8.1-zip php8.1-curl \
-    php8.1-apcu php8.1-fpm php8.1-bcmath\
+    ### Install php 8.2
+    php8.2 libapache2-mod-php8.2 php8.2-common php8.2-mbstring php8.2-xmlrpc php8.2-soap php8.2-gd php8.2-xml php8.2-intl php8.2-mysql php8.2-cli php8.2-zip php8.2-curl \
+    php8.2-apcu php8.2-fpm php8.2-bcmath\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install composer
@@ -38,11 +35,11 @@ RUN locale-gen en_US.UTF-8 en_GB.UTF-8 de_DE.UTF-8 es_ES.UTF-8 fr_FR.UTF-8 it_IT
 #Install mhmail
 RUN cd /usr/local/bin && wget https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64
 RUN chmod +x /usr/local/bin/mhsendmail_linux_amd64 && mv /usr/local/bin/mhsendmail_linux_amd64 /usr/local/bin/mhsendmail
-COPY mailhog.ini /etc/php/8.1/mods-available/
+COPY mailhog.ini /etc/php/8.2/mods-available/
 RUN phpenmod mailhog
 
 # Update php.ini
-COPY drupal.ini /etc/php/8.1/mods-available/
+COPY drupal.ini /etc/php/8.2/mods-available/
 RUN phpenmod drupal
 
 

@@ -19,51 +19,87 @@ services:
     networks:
       - web
 
-  php7-server:
-    build: ./docker/app/php7-server
-    container_name: dru-server-php7
+  php70:
+    build:
+      context: ./docker/app/php-server
+      dockerfile: php70/Dockerfile
+    container_name: dru-server-php70
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.php7-server.rule=HostRegexp(`{subdomain:.+}.php7.local`)"
-      - "traefik.http.routers.php7-server.entrypoints=web"
-      - "traefik.http.routers.php7-server-secure.rule=HostRegexp(`{subdomain:.+}.php7.local`)"
-      - "traefik.http.routers.php7-server-secure.entrypoints=websecure"
-      - "traefik.http.routers.php7-server-secure.tls=true"
-      # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
-      # - "traefik.http.routers.php7-server-secure.tls.certresolver=myresolver"
-    #links:
-    #  - mysql
-    #  - mailhog
+      - "traefik.http.routers.php70.rule=HostRegexp(`{subdomain:.+}.php70.local`)"
+      - "traefik.http.routers.php70.entrypoints=web"
+      - "traefik.http.routers.php70-secure.rule=HostRegexp(`{subdomain:.+}.php70.local`)"
+      - "traefik.http.routers.php70-secure.entrypoints=websecure"
+      - "traefik.http.routers.php70-secure.tls=true"
     volumes:
       - ./www:/var/www/html
       - ./docker/logs/apache2:/var/log/apache2
-      - ./docker/app/php7-server/apache2/sites-available:/etc/apache2/sites-available
+      - ./docker/data/apache2/php70/sites-available:/etc/apache2/sites-available
     networks:
       - web
 
-  php8-server:
-    build: ./docker/app/php8-server
-    container_name: dru-server-php8
+  php74:
+    build:
+      context: ./docker/app/php-server
+      dockerfile: php74/Dockerfile
+    container_name: dru-server-php74
     extra_hosts:
       - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.php8-server.rule=HostRegexp(`{subdomain:.+}.php8.local`)"
-      - "traefik.http.routers.php8-server.entrypoints=web"
-      - "traefik.http.routers.php8-server-secure.rule=HostRegexp(`{subdomain:.+}.php8.local`)"
-      - "traefik.http.routers.php8-server-secure.entrypoints=websecure"
-      - "traefik.http.routers.php8-server-secure.tls=true"
-      # In place of 'myresolver', use a way to specify your own certificates or local certificate resolver setup if SSL is required
-      # - "traefik.http.routers.php8-server-secure.tls.certresolver=myresolver"
-    #links:
-    #  - mysql
-    #  - mailhog
+      - "traefik.http.routers.php74.rule=HostRegexp(`{subdomain:.+}.php74.local`)"
+      - "traefik.http.routers.php74.entrypoints=web"
+      - "traefik.http.routers.php74-secure.rule=HostRegexp(`{subdomain:.+}.php74.local`)"
+      - "traefik.http.routers.php74-secure.entrypoints=websecure"
+      - "traefik.http.routers.php74-secure.tls=true"
     volumes:
       - ./www:/var/www/html
       - ./docker/logs/apache2:/var/log/apache2
-      - ./docker/app/php8-server/apache2/sites-available:/etc/apache2/sites-available
+      - ./docker/data/apache2/php74/sites-available:/etc/apache2/sites-available
+    networks:
+      - web
+
+  php81:
+    build:
+      context: ./docker/app/php-server
+      dockerfile: php81/Dockerfile
+    container_name: dru-server-php81
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php81.rule=HostRegexp(`{subdomain:.+}.php81.local`)"
+      - "traefik.http.routers.php81.entrypoints=web"
+      - "traefik.http.routers.php81-secure.rule=HostRegexp(`{subdomain:.+}.php81.local`)"
+      - "traefik.http.routers.php81-secure.entrypoints=websecure"
+      - "traefik.http.routers.php81-secure.tls=true"
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/logs/apache2:/var/log/apache2
+      - ./docker/data/apache2/php81/sites-available:/etc/apache2/sites-available
+    networks:
+      - web
+
+  php82:
+    build:
+      context: ./docker/app/php-server
+      dockerfile: php82/Dockerfile
+    container_name: dru-server-php82
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.php82.rule=HostRegexp(`{subdomain:.+}.php82.local`)"
+      - "traefik.http.routers.php82.entrypoints=web"
+      - "traefik.http.routers.php82-secure.rule=HostRegexp(`{subdomain:.+}.php82.local`)"
+      - "traefik.http.routers.php82-secure.entrypoints=websecure"
+      - "traefik.http.routers.php82-secure.tls=true"
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/logs/apache2:/var/log/apache2
+      - ./docker/data/apache2/php82/sites-available:/etc/apache2/sites-available
     networks:
       - web
 
@@ -86,8 +122,6 @@ services:
     container_name: dru-phpmyadmin
     ports:
       - "9090:80"
-    #links:
-    #  - mysql
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
