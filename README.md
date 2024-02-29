@@ -27,6 +27,7 @@ Usage: ./start.sh -i php_version [--host host_ip_address]
 - Access the PHP 8.2 container: `docker exec -it dru-server-php82 bash`
 
  ⚡ **Install xdebug**
+ 
 Refer: `./script/install-xdebug.sh -h`
 
 ```bash
