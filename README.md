@@ -1,16 +1,40 @@
 # DruDocker
 Local development environment for Drupal with multiple PHP versions. 
-Support: PHP 7.0, 7.4, 8.1, 8.2
-## 1. Clone drudocker
-   🔭 **To build and run the containers using Docker Compose:**
-   - Build the Docker containers: `docker-compose build`
-   - Start the containers (use -d to run in detached mode): `docker-compose up` or `docker-compose up -d`
+ 
+## 1. Setup drudocker
+   🔭 **Build the Docker containers :**
+```
+docker-compose build
+```
+🌱 **Start the containers and access container**
+Use `./script/start.sh` to start and access the default container `dru-server-php74`, or use the -i option followed by `-i <php-version>` to access a different PHP version container. Example: `./script/start.sh -i php81`
 
-   🌱 **To access the server via command line for different PHP versions:**
-   - For PHP 7.0: `docker exec -it dru-server-php70 bash`
-   - For PHP 7.4: `docker exec -it dru-server-php74 bash`
-   - For PHP 8.1: `docker exec -it dru-server-php81 bash`
-   - For PHP 8.2: `docker exec -it dru-server-php81 bash`
+```bash
+Usage: ./start.sh -i php_version [--host host_ip_address]
+
+   -i php_version   Specify the PHP version you want to use (default is 'php74')
+   -h, --help       Display help information
+
+```
+💬 **Additional Commands**
+
+- Start Docker containers: `docker-compose up` or `docker-compose up -d` for detached mode
+- Access the PHP 7.0 container: `docker exec -it dru-server-php70 bash`
+- Access the PHP 7.4 container: `docker exec -it dru-server-php74 bash`
+- Access the PHP 8.1 container: `docker exec -it dru-server-php81 bash`
+- Access the PHP 8.2 container: `docker exec -it dru-server-php82 bash`
+
+ ⚡ **Install xdebug**
+Refer: `./script/install-xdebug.sh -h`
+
+```bash
+Usage: ./script/install-xdebug.sh [option...]
+
+   -i php_version   the PHP version you want to use (default is 'php74')
+   --host           the host IP address for Xdebug (e.g., '172.17.0.1', default is 'host.docker.internal')
+   -h, --help       print this help message
+```
+Ex: `./script/install-xdebug.sh -i php81`
 
 ## 2. Config vhost:
 - 📫 **For php 7x:** 
