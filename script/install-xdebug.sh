@@ -8,7 +8,7 @@ display_help() {
     echo "Usage: $0 [option...]" >&2
     echo
     echo "   -i php_version   the PHP version you want to use (default is 'php74')"
-    echo "   --host           the host IP address for Xdebug (e.g., '172.17.0.1')"
+    echo "   --host           the host IP address for Xdebug (e.g., '172.17.0.1', default is 'host.docker.internal')"
     echo "   -h, --help       print this help message"
     exit 1
 }
