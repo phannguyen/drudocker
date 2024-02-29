@@ -7,7 +7,9 @@ Local development environment for Drupal with multiple PHP versions.
 docker-compose build
 ```
 🌱 **Start the containers and access container**
-Use `./script/start.sh` to start and access the default container `dru-server-php74`, or use the -i option followed by `-i <php-version>` to access a different PHP version container. Example: `./script/start.sh -i php81`
+Use ```
+./script/start.sh
+``` to start and access the default container `dru-server-php74`, or use the -i option followed by `-i <php-version>` to access a different PHP version container. Example: `./script/start.sh -i php81`
 
 ```bash
 Usage: ./start.sh -i php_version [--host host_ip_address]
